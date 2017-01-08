@@ -1,0 +1,16 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'stakkenblokken.Crypto'
+version = '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.11'
+
+    // compile 'com.mashape.unirest:unirest-java:1.4.9'
+}
+
