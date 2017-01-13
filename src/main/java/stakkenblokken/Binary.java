@@ -23,6 +23,23 @@ public class Binary {
         this.size = bytes.length;
     }
 
+    public boolean bit(int index) {
+        int bite = index / 8;
+        if (bite > size - 1) throw new IllegalArgumentException("index is out of bounds");
+        int bit = index % 8;
+        int mask = 0x80 >>> bit;
+        return (bytes[bite] & mask) == mask;
+    }
+
+    public int getLeadingZeroBits() {
+        int result = 0;
+        for (int i=0; i<size*8; i++) {
+            if (bit(i)) break;
+            result++;
+        }
+        return result;
+    }
+
     public Binary xor(Binary other) {
         if (size != other.size) throw new IllegalArgumentException("binaries have different size");
         byte[] result = new byte[size];
@@ -49,6 +66,10 @@ public class Binary {
         return result.toString();
     }
 
+    @Override
+    public String toString() {
+        return "Binary[[" + size + "]" + toHex() + "]";
+    }
 
     @Override
     public boolean equals(Object o) {
