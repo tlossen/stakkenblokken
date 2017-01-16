@@ -11,11 +11,12 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.11'
 
-    // compile 'com.mashape.unirest:unirest-java:1.4.9'
-//    compile 'org.mindrot:jbcrypt:0.4'
-
     compile 'org.bouncycastle:bcprov-jdk15on:1.56'
     compile 'org.iq80.leveldb:leveldb:0.9'
-
+    compile 'com.github.davidmoten:flatbuffers-java:1.4.0.1'
 }
 
+task flat(type: Exec) {
+    executable "flatc"
+    args "--java", "-o", "src/main/java/", "hello.flat"
+}
