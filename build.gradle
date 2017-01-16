@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'stakkenblokken.Storage'
+mainClassName = 'stakkenblokken.Importer'
 version = '0.1'
 
 repositories {
