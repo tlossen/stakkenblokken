@@ -1,0 +1,18 @@
+namespace stakkenblokken.model;
+
+enum Color : byte { Red = 1, Green, Blue }
+
+struct Vec3 {
+  x:float;
+  y:float;
+  z:float;
+}
+
+table Monster {
+  pos:Vec3;
+  mana:short = 150;
+  name:string;
+  color:Color = Blue;
+}
+
+root_type Monster;

@@ -68,7 +68,7 @@ public class Binary {
 
     @Override
     public String toString() {
-        return "Binary[[" + size + "]" + toHex() + "]";
+        return "Binary(" + size + ", " + toHex() + ")";
     }
 
     @Override
