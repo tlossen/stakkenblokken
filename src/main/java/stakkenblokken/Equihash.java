@@ -2,6 +2,10 @@ package stakkenblokken;
 
 import org.bouncycastle.crypto.digests.Blake2bDigest;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,20 +26,23 @@ public class Equihash {
     private static final int SEED = 3;
     private static final int NONCE = 2;
 
-    public static void main(String[] args) {
-        List<Binary> parts = new ArrayList<Binary>(32);
+    public static void main(String[] args) throws IOException {
+        List<Binary> parts = new ArrayList(32);
 
         for (int i : SOLUTION) {
-            byte[] in = ByteBuffer
-                    .allocate(4).putInt(SEED)
-                    .allocate(4).putInt(SEED)
-                    .allocate(4).putInt(SEED)
-                    .allocate(4).putInt(SEED)
-                    .allocate(4).putInt(NONCE)
-                    .allocate(4).putInt(i)
+            byte[] in = ByteBuffer.allocate(6 * 4)
+                    .putInt(SEED).putInt(SEED)
+                    .putInt(SEED).putInt(SEED)
+                    .putInt(NONCE).putInt(i)
                     .array();
+            if (parts.isEmpty()) {
+                FileOutputStream file = new FileOutputStream(new File("./47e0c.bin"));
+                file.write(in);
+                file.close();
+            }
+            System.out.println(new Binary(in));
             byte[] out = new byte[32];
-            Blake2bDigest blake = new Blake2bDigest(null, 32, null, null);
+            Blake2bDigest blake = new Blake2bDigest(null, out.length, null, null);
             blake.update(in, 0, in.length);
             blake.doFinal(out, 0);
             Binary part = new Binary(out);
@@ -43,10 +50,10 @@ public class Equihash {
             parts.add(part);
         }
 
-        System.out.println();
-        for (int i = 0; i < 32; i=i+2) {
-            System.out.println(parts.get(i).xor(parts.get(i+1)));
-        }
+//        System.out.println();
+//        for (int i = 0; i < 32; i=i+2) {
+//            System.out.println(parts.get(i).xor(parts.get(i+1)));
+//        }
     }
 
 }
